@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { HousingLocationComponent } from "../housing-location/housing-location.component";
 import { HousingLocation } from "../housingLocation";
+import { HousingService } from "../housing.service";
 
 @Component({
   selector: 'app-home',
@@ -12,15 +13,12 @@ import { HousingLocation } from "../housingLocation";
 })
 export class HomeComponent {
 
-  readonly baseUrl = 'https://angular.io/assets/images/tutorials/faa'
+  housingLocationList: HousingLocation[] = [];
 
-  housingLocation: HousingLocation = {
-    id: 9999,
-    name: 'Test Home',
-    city: 'Test city',
-    postcode: 'AB',
-    photo: `${this.baseUrl}/bernard-hermant-CLKGGwIBTaY-unsplash.jpg`,
-    units: 99,
-    wifi: true,
-  };
+  housingService: HousingService = inject(HousingService);
+
+  constructor() {
+    this.housingLocationList = this.housingService.getAllHousingLocations();
+  }
+
 }
